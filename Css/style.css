@@ -112,7 +112,7 @@ select {
 
 input[type="date"] {
 	border: none;
-	max-width: 120px;
+	max-width: 150px;
 }
 
 input[type="range"] {
@@ -133,7 +133,41 @@ aside {
 
 @media (min-width: 1200px) {
 	main {
-		margin-left: 280px;
+		margin-left: 270px;
 		margin-top: 80px;
 	}
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+th {
+	border-bottom: 1px dashed #ececec;
+	border-collapse: collapse;
+	font-family: Lato;
+	font-weight: bold;
+	font-style: normal;
+	font-size: 16px;
+	line-height: 24,96px;
+	align-items: center;
+	color: #585858;
+	align-items: center;
+	text-align: center;
+}
+
+td {
+	border-bottom: 1px dashed #ececec;
+	border-collapse: collapse;
+	font-family: Lato;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 16px;
+	line-height: 24,96px;
+	align-items: center;
+	color: #585858;
+	align-items: center;
+	text-align: center;
 }
