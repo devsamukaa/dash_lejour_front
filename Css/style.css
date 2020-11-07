@@ -54,6 +54,7 @@ select {
 
 .btn-filtrar {
 	display: inline;
+	min-width: 170px;
 	background: #68bfb7;
 	border-radius: 28px;
 	font-family: Lato;
@@ -72,7 +73,10 @@ select {
 	border-radius: 30px;
 	min-height: 210px;
 	border-radius: 30px;
+	padding: 20px;
 }
+
+
 
 form {
 	margin-top: 10px;
@@ -112,12 +116,18 @@ select {
 
 input[type="date"] {
 	border: none;
-	max-width: 120px;
+	max-width: 150px;
+	overflow: visible;
 }
 
 input[type="range"] {
 	display: inline;
 	width: 150px;
+}
+
+.option-fieldset{
+	height: 52px;
+	width: 169px;
 }
 
 footer {
@@ -135,5 +145,29 @@ aside {
 	main {
 		margin-left: 280px;
 		margin-top: 80px;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: 5px;
+		row-gap: 86px;
+	}
+
+	div#span-two{
+		grid-column: span 2;
+		min-height: 410px;
+		min-width: 100%;
+	}
+
+	.grafico{
+		background: #ffffff;
+		box-shadow: 0px 3px 10px rgba(88, 88, 88, 0.1), 0px 16px 31px rgba(88, 88, 88, 0.1);
+		border-radius: 30px;
+		min-height: 210px;
+		width: 500px;
+		border-radius: 30px;
+		padding: 20px;
+	}
+
+	.btn-filtrar{
+		display: block;
 	}
 }
