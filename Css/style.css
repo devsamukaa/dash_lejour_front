@@ -48,12 +48,17 @@ fieldset {
 	border: #585858 solid 1px;
 }
 
+.option-fieldset{
+	min-height: 52px;
+}
+
 select {
 	border: none;
 }
 
 .btn-filtrar {
 	display: inline;
+	min-width: 170px;
 	background: #68bfb7;
 	border-radius: 28px;
 	font-family: Lato;
@@ -72,6 +77,7 @@ select {
 	border-radius: 30px;
 	min-height: 210px;
 	border-radius: 30px;
+	padding: 20px;
 }
 
 form {
@@ -113,6 +119,7 @@ select {
 input[type="date"] {
 	border: none;
 	max-width: 150px;
+	overflow: visible;
 }
 
 input[type="range"] {

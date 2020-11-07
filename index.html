@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="Css/style.css">
-
+    <link rel="stylesheet" href="Css/weddings.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Casamentos</title>
 </head>
+
 <body>
 
     <div class="fixed-top menu shadow-sm d-block d-xl-none">
         <nav class="navbar justify-content-end">
             <img src="Imagens/logo.png" class="mr-auto" alt="">
-          <button class="navbar-toggler "  data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <img src="Imagens/Menu.png" alt="Logo">
-          </button>
+            <button class="navbar-toggler " data-toggle="collapse" data-target="#navbarToggleExternalContent"
+                aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <img src="Imagens/Menu.png" alt="Logo">
+            </button>
         </nav>
         <div class="collapse" id="navbarToggleExternalContent">
             <div class="p-4">
@@ -26,10 +31,10 @@
                 <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Usuarios</a>
                 <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Vendas</a>
             </div>
-          </div>
-      </div>
+        </div>
+    </div>
 
-      <aside class="d-none d-xl-block">
+    <aside class="d-none d-xl-block">
         <div class="p-4">
             <img class="ml-5 my-4" src="Imagens/logo.png" class="mr-auto" alt="">
             <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom">Overview</a>
@@ -43,7 +48,9 @@
 
 
     <main>
-        <div class="container mt-3">
+
+        <!--Indicador de estilos de casamento por ano-->
+        <div class="container mt-3" id="span-two">
             <div class="titulo row justify-content-start">
                 <div class="col-1">
                     <img src="Imagens/barraMenu.png">
@@ -52,12 +59,12 @@
                     <p class="col m-0 pl-0">Casamentos durante o ano</p>
                 </div>
             </div>
-    
-           
-            <form action="" class="mb-2 align-items-center">
+
+
+            <form method="" action="" class="mb-2 align-items-center">
                 <fieldset>
                     <legend>Periodo</legend>
-                    <select class="ml-3" name="periodo" id="">
+                    <select class="ml-3" name="periodo" id = "year-value">
                         <option value="2020">2020</option>
                         <option value="2019">2019</option>
                         <option value="2018">2018</option>
@@ -66,29 +73,30 @@
                         <option value="2015">2015</option>
                     </select>
                 </fieldset>
-                
-                
-                
+
+
+
                 <fieldset>
                     <legend>Estilo</legend>
-                    <select class="ml-3" name="estilo" id="">
+                    <select class="ml-3" name="estilo" id="style-value">
                         <option value="classico">Clássico</option>
                         <option value="moderno">Moderno</option>
                         <option value="rustico">Rústico</option>
                     </select>
                 </fieldset>
-    
-                <input class="btn btn-filtrar mb-4" type="button" value="Filtrar">
-                
+
+                <input class="btn btn-filtrar mb-4" type="submit" value="Filtrar" id="btnYear">
+
             </form>
-    
-            <div class="grafico m-auto">
-                
+
+            <div class="grafico m-auto" id="span-two">
+                <canvas id="wedding-year" width="600" height="280"></canvas>
             </div>
-            
+
         </div>
-    
-    
+        <!--Fim indicador de estilos de casamento por ano-->
+
+        <!--Indicador de budget -->
         <div class="container mt-3">
             <div class="titulo row justify-content-start">
                 <div class="col-1 mr-0 pr-0">
@@ -98,49 +106,53 @@
                     <p>Casamentos com o budget acima de (R$)</p>
                 </div>
             </div>
-    
-            <form action="">
+
+            <form action="" method="">
                 <fieldset>
                     <legend>Periodo Inicial</legend>
                     <input class="ml-3" type="date" name="" id="">
                 </fieldset>
-    
+
                 <fieldset>
                     <legend>Periodo Final</legend>
                     <input class="ml-3" type="date" name="" id="">
                 </fieldset>
-                
-                <input type="range" class="bar" id="">
-    
-                <input class="btn btn-filtrar mb-3" type="button" value="Filtrar">
+
+                <input type="range" class="bar" id="budget" min = "35000" max = "250000">
+                <b>R$</b><span>142500</span>
+
+                <input class="btn btn-filtrar mb-3" type="submit" value="Filtrar" id="btnBudget">
             </form>
-    
-            <div class="grafico m-auto"></div>
+
+            <div class="grafico m-auto">
+                <canvas id="wedding-budget" width="600" height="280"></canvas>
+            </div>
         </div>
-    
-    
+        <!--Fim indicador de budget -->
+
+        <!--Indicador de status-->
         <div class="container mt-3">
             <div class="titulo row justify-content-start">
                 <div class="col-1">
                     <img src="Imagens/barraMenu.png">
                 </div>
                 <div class="col m-0 pl-0">
-                    <p >Status dos casamentos</p>
+                    <p>Status dos casamentos</p>
                 </div>
             </div>
-    
-            <form>
+
+            <form method="" action="">
                 <fieldset>
                     <legend>Periodo Inicial</legend>
-                    <input class="ml-3" type="date" name="" id="">
+                    <input class="ml-3" type="date" name="" id="" value="">
                 </fieldset>
-    
+
                 <fieldset>
                     <legend>Periodo Final</legend>
-                    <input class="ml-3" type="date" name="" id="">
+                    <input class="ml-3" type="date" name="" id="" value="">
                 </fieldset>
-    
-                <fieldset>
+
+                <fieldset class="option-fieldset">
                     <legend class="mb-0">Estilo</legend>
                     <select class="ml-3" name="estilo" id="">
                         <option value="classico">Clássico</option>
@@ -148,24 +160,36 @@
                         <option value="rustico">Rústico</option>
                     </select>
                 </fieldset>
-    
-                <input class="btn btn-filtrar mb-4" type="button" value="Filtrar">
+
+                <input class="btn btn-filtrar mb-4" type="submit" value="Filtrar" id="btnStatus">
             </form>
-    
-            <div class="grafico m-auto"></div>
-        </div> 
+
+            <div class="grafico m-auto">
+                <canvas id="wedding-status" width="600" height="280"></canvas>
+            </div>
+        </div>
+        <!--Fim indicador de status-->
+
     </main>
 
 
     <footer class="mt-3"></footer>
 
-    
-      
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
     
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
     <script src="Js/app.js"></script>
+    <script src="Js/Wedding-page/wedding-charts.js"></script>
+    
+
 </body>
+
 </html>
