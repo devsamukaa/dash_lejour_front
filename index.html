@@ -61,7 +61,7 @@
             </div>
 
 
-            <form method="" action="" class="mb-2 align-items-center">
+            <form method="POST" action="" class="mb-2 align-items-center">
                 <fieldset>
                     <legend>Periodo</legend>
                     <select class="ml-3" name="periodo" id = "year-value">
@@ -71,6 +71,7 @@
                         <option value="2017">2017</option>
                         <option value="2016">2016</option>
                         <option value="2015">2015</option>
+                        <option value="todos">Todos</option>
                     </select>
                 </fieldset>
 
@@ -110,12 +111,12 @@
             <form action="" method="">
                 <fieldset>
                     <legend>Periodo Inicial</legend>
-                    <input class="ml-3" type="date" name="" id="">
+                    <input class="ml-3" type="date" name="" id="initial-period">
                 </fieldset>
 
                 <fieldset>
                     <legend>Periodo Final</legend>
-                    <input class="ml-3" type="date" name="" id="">
+                    <input class="ml-3" type="date" name="" id="final-period">
                 </fieldset>
 
                 <input type="range" class="bar" id="budget" min = "35000" max = "250000">
@@ -189,8 +190,6 @@
     <script src="Js/app.js"></script>
     <script src="Js/Wedding-page/wedding-charts.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    
-
 </body>
 
 </html>
