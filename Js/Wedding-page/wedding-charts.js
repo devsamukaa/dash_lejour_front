@@ -11,6 +11,9 @@ var budget = document.querySelector('#budget');
 var btnBudget = document.querySelector("#btnBudget");
 var value = document.querySelector('span');
 
+var inicio = document.querySelector('#inicio');
+var final = document.querySelector('#final');
+var btnStatus = document.querySelector('#btnStatus');
 
 budget.addEventListener('input', function() {
   value.textContent = this.value;
@@ -26,6 +29,17 @@ const checkFields = () => {
             finalPeriod.value = "";
             initialPeriod.style.border = "3px solid red";
             finalPeriod.style.border = "3px solid red";
+        }
+    }
+}
+
+const checkFields2 = () => {
+    if(inicio.value === "" && final.value === ""){
+        alert("Por favor, preencha todos os campos (Período Inicial e Final)!")
+    } else {
+        while(inicio.value > final.value) {
+            inicio.value = "";
+            final.value = "";
         }
     }
 }
@@ -121,6 +135,47 @@ function callWeddingBudget(){
 }
 
 callWeddingBudget();
+
+function callWeddingStatus(){
+    if (!Array.prototype.forEach) {
+        Array.prototype.forEach = function(fn, scope) {
+            for(var i = 0, len = this.length; i < len; ++i) {
+                fn.call(scope, this[i], i, this);
+            }
+        };
+    }
+
+    var periodo_inicial = 00/00/0000;
+    var periodo_final = 00/00/0000;
+    var estilo = 'Clássico';
+
+    $.ajax({
+        url: "http://testeshttps.herokuapp.com/weddings-status/",
+        type: 'POST',
+        data: {
+            "periodo_inicial" : periodo_inicial,
+            "periodo_final" : periodo_final,
+            "estilo" : estilo
+        },
+        success: function(data){
+            console.log("Dados em json:");
+            console.log(data);
+
+            data.forEach(element => {
+                quantidadePorTema.push(Number(element.weddings))
+            });
+        },
+        error: function(e){
+            console.log(e);
+        }
+    });
+}
+
+callWeddingStatus();
+
+btnStatus.onClick = function(){
+    checkFields2();
+}
 
 function callCharts(){
 //--------------Weddings/ year chart indicator---------------------
