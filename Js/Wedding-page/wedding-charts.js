@@ -1,4 +1,4 @@
-window.onload = function() {
+//window.onload = function() {
 
 //------WEEDINGS / YEAR
 var btnFilter = document.querySelector('#btnYear');
@@ -8,19 +8,17 @@ var styleValue =  document.querySelector("#style-value");
 var initialPeriod = document.querySelector('#initial-period')
 var finalPeriod = document.querySelector('#final-period')
 var budget = document.querySelector('#budget');
-var btnBudget = document.querySelector("#btnBudget");
 var value = document.querySelector('span');
 
 var inicio = document.querySelector('#inicio');
 var final = document.querySelector('#final');
-var btnStatus = document.querySelector('#btnStatus');
 
 budget.addEventListener('input', function() {
   value.textContent = this.value;
 });
 
 //Função que valida os campos de data informados
-const checkFields = () => {
+function checkFields () {
     if(initialPeriod.value === "" && finalPeriod.value === ""){
         alert("Por favor, preencha todos os campos (Período Inicial e Final)!")
     }else{
@@ -33,13 +31,15 @@ const checkFields = () => {
     }
 }
 
-const checkFields2 = () => {
+function checkFields2 () {
     if(inicio.value === "" && final.value === ""){
-        alert("Por favor, preencha todos os campos (Período Inicial e Final)!")
+        alert("Por favor, preencha todos os campos (Período Inicial e Final)!");
     } else {
         while(inicio.value > final.value) {
             inicio.value = "";
             final.value = "";
+            inicio.style.border = "3px solid red";
+            final.style.border = "3px solid red";
         }
     }
 }
@@ -95,10 +95,9 @@ callWeddingYear()
 //Definindo um time de 2s para a renderização dos gráficos
 setTimeout(function(){callCharts()}, 2000)
 
-
-btnBudget.onclick = function(){
+$("#btnBudget").on("click", function(){
     checkFields();
-}
+});
 
 function callWeddingBudget(){
      // Criando a função foreach, caso o javascript do browser seja desatualizado
@@ -136,6 +135,10 @@ function callWeddingBudget(){
 
 callWeddingBudget();
 
+$("#btnStatus").on("click", function(){
+    checkFields2();
+});
+
 function callWeddingStatus(){
     if (!Array.prototype.forEach) {
         Array.prototype.forEach = function(fn, scope) {
@@ -172,10 +175,6 @@ function callWeddingStatus(){
 }
 
 callWeddingStatus();
-
-btnStatus.onClick = function(){
-    checkFields2();
-}
 
 function callCharts(){
 //--------------Weddings/ year chart indicator---------------------
@@ -380,4 +379,4 @@ var pie_status = document.getElementById('wedding-status').getContext('2d');
 
 
 
-}
+//}
