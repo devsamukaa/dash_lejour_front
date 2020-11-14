@@ -111,8 +111,10 @@ vendorPage = {
         
         if(params.mode == "rentability") {
             $("#rentability-ranking").addClass("loading");
+            $("#rentability-ranking .box-vendor-bar").addClass("toZero");
         } else if(params.mode == "invoices") {
             $("#invoices-ranking").addClass("loading");
+            $("#invoices-ranking .box-vendor-bar").addClass("toZero");
         }
         
         $.ajax({
@@ -123,9 +125,11 @@ vendorPage = {
 
                 if(params.mode == "rentability") {
                     $("#rentability-ranking").removeClass("loading");
+                    $("#rentability-ranking .box-vendor-bar").removeClass("toZero");
                     vendorPage.drawRentabilityRanking(data);
                 } else if(params.mode == "invoices") {
                     $("#invoices-ranking").removeClass("loading");
+                    $("#invoices-ranking .box-vendor-bar").removeClass("toZero");
                     vendorPage.drawInvoicesVendorsRanking(data);
                 }
                 
