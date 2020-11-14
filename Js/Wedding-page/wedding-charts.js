@@ -1,220 +1,260 @@
-//window.onload = function() {
-
-//------WEEDINGS / YEAR
-var btnFilter = document.querySelector('#btnYear');
-var yearValue = document.querySelector("#year-value");
-var styleValue =  document.querySelector("#style-value");
-//-------BUDGET
-var initialPeriod = document.querySelector('#initial-period')
-var finalPeriod = document.querySelector('#final-period')
-var budget = document.querySelector('#budget');
-var value = document.querySelector('span');
-
-var inicio = document.querySelector('#inicio');
-var final = document.querySelector('#final');
-
-budget.addEventListener('input', function() {
-  value.textContent = this.value;
-});
-
-//Função que valida os campos de data informados
-function checkFields () {
-    if(initialPeriod.value === "" && finalPeriod.value === ""){
-        alert("Por favor, preencha todos os campos (Período Inicial e Final)!")
-    }else{
-        while(initialPeriod.value > finalPeriod.value){
-            initialPeriod.value = "";
-            finalPeriod.value = "";
-            initialPeriod.style.border = "3px solid red";
-            finalPeriod.style.border = "3px solid red";
+// Criando a função foreach, caso o javascript do browser seja desatualizado
+if ( !Array.prototype.forEach ) {
+    Array.prototype.forEach = function(fn, scope) {
+        for(var i = 0, len = this.length; i < len; ++i) {
+        fn.call(scope, this[i], i, this);
         }
-    }
+    };
 }
 
-function checkFields2 () {
-    if(inicio.value === "" && final.value === ""){
-        alert("Por favor, preencha todos os campos (Período Inicial e Final)!");
-    } else {
-        while(inicio.value > final.value) {
-            inicio.value = "";
-            final.value = "";
-            inicio.style.border = "3px solid red";
-            final.style.border = "3px solid red";
+casamentosPage = {
+    
+    init: function() {
+        casamentosPage.handleEvents();
+    },
+
+    checkFieldsWeddingYearChart: function () {
+
+        var inputAno = $("#year-value");
+        var inputEstilo = $("#style-weddings-year");
+        var checkShowWithoutDate = $("#mostrar-sem-data:checked").val();
+
+        var params = {};
+
+        if(inputAno.val() != "todos") {
+            params.ano = inputAno.val();
         }
-    }
-}
 
+        if(inputEstilo.val() != "todos") {
+            params.estilo = inputEstilo.val();
+        }
 
-//Criando Array que irá armazenar o número de casamentos no ano de 2020
-var numeroCasamentos = []
+        if(checkShowWithoutDate == "on") {
+            params.sem_data = true;
+        }
 
-//Criando Array que irá armazendo o número de casamentos por tema
-var quantidadePorTema = []
+        casamentosPage.callWeddingYear(params);
+    },
 
-function callWeddingYear() {
-        // Criando a função foreach, caso o javascript do browser seja desatualizado
-        if ( !Array.prototype.forEach ) {
-            Array.prototype.forEach = function(fn, scope) {
-                for(var i = 0, len = this.length; i < len; ++i) {
-                fn.call(scope, this[i], i, this);
+    checkFieldsBudgetChart: function () {
+
+        var initialPeriod = $('#initial-period');
+        var finalPeriod = $('#final-period');
+        var inputBudget = $("#budget");
+
+        var params = {};
+
+        if(initialPeriod.val() != "" || finalPeriod.val() != ""){
+            
+            if(initialPeriod.val() === "" || finalPeriod.val() === "") {
+                alert("Por favor, preencha as duas datas");
+                if(initialPeriod.val() === ""){
+                    initialPeriod.parents("fieldset").addClass("error");
                 }
-            };
+                if(finalPeriod.val() === ""){
+                    finalPeriod.parents("fieldset").addClass("error");
+                }
+                return;
+            } else if(initialPeriod.val() > finalPeriod.val()) {
+                alert("Data inicial maior que a data final");
+                initialPeriod.parents("fieldset").addClass("error");
+                finalPeriod.parents("fieldset").addClass("error");
+                return;
+            }
+
+            if(initialPeriod.val() != "" && finalPeriod.val() != "") {
+                params.data_de = initialPeriod.val();
+                params.data_ate = finalPeriod.val();
+            }
+
         }
 
-        var ano = 2020  
-        var estilo = `clássico`;
+        params.budget = inputBudget.val();
 
+        casamentosPage.callWeddingBudget(params);
+    },
+
+    checkFieldsStatusChart: function () {
+
+        var inicio = $('#inicio');
+        var final = $('#final');
+        var styleStatus = $("#style-status");
+
+        var params = {};
+
+        if(inicio.val() != "" || final.val() != ""){
+            
+            if(inicio.val() === "" || final.val() === "") {
+                alert("Por favor, preencha as duas datas");
+                if(inicio.val() === ""){
+                    inicio.parents("fieldset").addClass("error");
+                }
+                if(final.val() === ""){
+                    final.parents("fieldset").addClass("error");
+                }
+                return;
+            } else if(inicio.val() > final.val()) {
+                alert("Data inicial maior que a data final");
+                inicio.parents("fieldset").addClass("error");
+                final.parents("fieldset").addClass("error");
+                return;
+            }
+
+            if(inicio.val() != "" && final.val() != "") {
+                params.data_de = inicio.val();
+                params.data_ate = final.val();
+            }
+
+        }
+
+        if(styleStatus.val() != "todos") {
+            params.estilo = styleStatus.val();
+        }
+
+        casamentosPage.callWeddingStatus(params);
+    },
+
+    callWeddingYear: function(params = {}, firstTime = false) {
+
+        var numeroCasamentos = [];
+        var labels = [];
+    
+        $("#weddings-during-year").addClass("loading");
+    
         $.ajax({
-			url: "https://testeshttps.herokuapp.com/weddings/", /* URL da servlet */
-			type: 'POST', /* Tipo de requisição, igual no form [Vamos usar por padrão sempre POST] */
-			data: { /* Informações que vamos mandar para a servlet no formato chave:valor */
-                "ano" : ano,
-                "estilo" : estilo
-            },
-			success: function(data) {
-                console.log("Dados em json:");
-                console.log(data);
+            url: "http://localhost:8080/DashboardLejour/weddings_during_year", /* URL da servlet */
+            type: 'POST', /* Tipo de requisição, igual no form [Vamos usar por padrão sempre POST] */
+            data: params, /* Informações que vamos mandar para a servlet no formato chave:valor */
+            success: function(data) {
         
-				data.forEach(dadosCasamentos => {
-
+                data.forEach(dadosCasamentos => {
+    
                     //Buscando os dados da API e colocando no Array criado anteriormente.
-                    numeroCasamentos.push(Number(dadosCasamentos.weddings));
+                    
+                    if(params.hasOwnProperty("sem_data")){
+                        labels.push(String(dadosCasamentos.month));
+                        numeroCasamentos.push(Number(dadosCasamentos.weddings));
+                    }else{
+                        if(dadosCasamentos.month != "s_data") {
+                            labels.push(String(dadosCasamentos.month));
+                            numeroCasamentos.push(Number(dadosCasamentos.weddings));
+                        }
+                    }
                     
                 });
+    
+                $("#weddings-during-year").removeClass("loading");
+
+                if(firstTime){
+                    casamentosPage.drawWeddingsYearChart(labels, numeroCasamentos, firstTime);
+                }else {
+                    casamentosPage.drawWeddingsYearChart(labels, numeroCasamentos);
+                }
                 
-			},
-			error: function(e) {
-				console.log(e);
-			}
-		});
-}
-
-//Chamando a API
-callWeddingYear()
-
-//Definindo um time de 2s para a renderização dos gráficos
-setTimeout(function(){callCharts()}, 2000)
-
-$("#btnBudget").on("click", function(){
-    checkFields();
-});
-
-function callWeddingBudget(){
-     // Criando a função foreach, caso o javascript do browser seja desatualizado
-     if ( !Array.prototype.forEach ) {
-        Array.prototype.forEach = function(fn, scope) {
-            for(var i = 0, len = this.length; i < len; ++i) {
-            fn.call(scope, this[i], i, this);
+                
+            },
+            error: function(e) {
+                console.log(e);
             }
-        };
-    }
+        });
+    },
 
-    var ano = 2020  
-    var estilo = `clássico`;
+    callWeddingBudget: function(params = {}, firstTime = false){
 
-    $.ajax({
-        url: "https://testeshttps.herokuapp.com/weddings-budget/", /* URL da servlet */
-        type: 'POST', /* Tipo de requisição, igual no form [Vamos usar por padrão sempre POST] */
-        data: { /* Informações que vamos mandar para a servlet no formato chave:valor */
-            "ano" : ano,
-            "estilo" : estilo
-        },
-        success: function(data) {
-            console.log("Dados em json:");
-            console.log(data);
+        var labels = [];
+        var quantidadePorTema = [];
 
-            data.forEach(element => {
+        $("#budget-chart").addClass("loading");
+
+        $.ajax({
+            url: "http://localhost:8080/DashboardLejour/higher_budget_weddings", /* URL da servlet */
+            type: 'POST', /* Tipo de requisição, igual no form [Vamos usar por padrão sempre POST] */
+            data: params, /* Informações que vamos mandar para a servlet no formato chave:valor */
+            success: function(data) {
+
+                data.forEach(element => {
+                    labels.push(String(element.weddingType));
                     quantidadePorTema.push(Number(element.weddings))
-            });
-        },
-        error: function(e) {
-            console.log(e);
-        }
-    });
-}
+                });
 
-callWeddingBudget();
+                $("#budget-chart").removeClass("loading");
 
-$("#btnStatus").on("click", function(){
-    checkFields2();
-});
+                if(firstTime){
+                    casamentosPage.drawBudgetWeddingsChart(labels, quantidadePorTema, firstTime);
+                }else {
+                    casamentosPage.drawBudgetWeddingsChart(labels, quantidadePorTema);
+                }
 
-function callWeddingStatus(){
-    if (!Array.prototype.forEach) {
-        Array.prototype.forEach = function(fn, scope) {
-            for(var i = 0, len = this.length; i < len; ++i) {
-                fn.call(scope, this[i], i, this);
+                
+            },
+            error: function(e) {
+                console.log(e);
             }
-        };
-    }
+        });
+    },
 
-    var periodo_inicial = 00/00/0000;
-    var periodo_final = 00/00/0000;
-    var estilo = 'Clássico';
+    callWeddingStatus: function(params = {}, firstTime = false){
 
-    $.ajax({
-        url: "http://testeshttps.herokuapp.com/weddings-status/",
-        type: 'POST',
-        data: {
-            "periodo_inicial" : periodo_inicial,
-            "periodo_final" : periodo_final,
-            "estilo" : estilo
-        },
-        success: function(data){
-            console.log("Dados em json:");
-            console.log(data);
+        var labels = [];
+        var quantidadePorStatus = [];
 
-            data.forEach(element => {
-                quantidadePorTema.push(Number(element.weddings))
-            });
-        },
-        error: function(e){
-            console.log(e);
-        }
-    });
-}
+        $("#status-wedding-chart").addClass("loading");
+    
+        $.ajax({
+            url: "http://localhost:8080/DashboardLejour/wedding_status",
+            type: 'POST',
+            data: params,
+            success: function(data){
+    
+                data.forEach(element => {
+                    labels.push(String(element.status));
+                    quantidadePorStatus.push(Number(element.weddings))
+                });
 
-callWeddingStatus();
+                $("#status-wedding-chart").removeClass("loading");
 
-function callCharts(){
-//--------------Weddings/ year chart indicator---------------------
-var bar_year = document.getElementById('wedding-year').getContext('2d');
+                if(firstTime){
+                    casamentosPage.drawPieWeddingStatusChart(labels, quantidadePorStatus, firstTime);
+                }else {
+                    casamentosPage.drawPieWeddingStatusChart(labels, quantidadePorStatus);
+                }
+            },
+            error: function(e){
+                console.log(e);
+            }
+        });
+    },
 
+    drawWeddingsYearChart: function(labels, numeroCasamentos, firstTime = false){
+
+        var bar_year = document.getElementById('wedding-year').getContext('2d');
+    
         var background_1 = bar_year.createLinearGradient(0, 0, 0, 300);
         background_1.addColorStop(0, '#86D0CB');
         background_1.addColorStop(1, '#84B8E2');
-
+    
         var background_2 = bar_year.createLinearGradient(0, 0, 0, 600);
         background_2.addColorStop(0, '#E2645A');
         background_2.addColorStop(1, '#DB5D79');
-
+    
         /* data */
-        var data = {
-            labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+        var dados = {
+            labels: labels,
             datasets: [
                 {
                     /* data */
                     label: "Casamentos",
+                    scaleOverride: true,
                     backgroundColor: [background_2, background_1, background_2, background_1, background_2, background_1, background_2, background_1, background_2, background_1, background_2, background_1],
                     //Tentei realizar um laço pra percorrer o Array, mas sem sucesso...
-                    data: [numeroCasamentos[0],
-                           numeroCasamentos[1],
-                           numeroCasamentos[2],
-                           numeroCasamentos[3],
-                           numeroCasamentos[4],
-                           numeroCasamentos[5],
-                           numeroCasamentos[6],
-                           numeroCasamentos[7],
-                           numeroCasamentos[8],
-                           numeroCasamentos[9],
-                           numeroCasamentos[10],
-                           numeroCasamentos[11]]
+                    data: numeroCasamentos
+                            
                 }
             ]
         };
-
+    
         var options = {
-
+    
             legend: {
                 display: false
             },
@@ -223,10 +263,11 @@ var bar_year = document.getElementById('wedding-year').getContext('2d');
                 text: 'Casamentos durante o ano',
                 display: false
             },
+            maintainAspectRatio: false,
             scales: {
                 xAxes: [
                     {
-                        stacked: true,
+                        stacked: false,
                         ticks: {
                             
                         },
@@ -237,7 +278,7 @@ var bar_year = document.getElementById('wedding-year').getContext('2d');
                 ],
                 yAxes: [
                     {
-                        stacked: true,
+                        stacked: false,
                         gridLines: {
                             display: true
                         }
@@ -246,18 +287,33 @@ var bar_year = document.getElementById('wedding-year').getContext('2d');
                 ]
             }
         };
-
+    
         //Instanciando gráfico
-        var weddingYear = new Chart(document.getElementById("wedding-year"), 
-            {
-                type: 'bar',
-                data: data,
-                options: options
-            }
-        );
 
-//--------------Wedding budget chart indicator---------------------
-var bar_budget = document.getElementById('wedding-budget').getContext('2d');
+        if(firstTime) {
+
+            casamentosPage.weddingYearChart = new Chart(document.getElementById("wedding-year"), 
+                {
+                    type: 'bar',
+                    data: dados,
+                    options: options
+                }
+            );
+
+            
+        }else{
+            
+            casamentosPage.weddingYearChart.data.labels = dados.labels;
+            casamentosPage.weddingYearChart.data.datasets[0].data = dados.datasets[0].data;
+            casamentosPage.weddingYearChart.update();
+            
+        }
+
+    },
+
+    drawBudgetWeddingsChart: function(labels, quantidadePorTema, firstTime = false) {
+        //--------------Wedding budget chart indicator---------------------
+        var bar_budget = document.getElementById('wedding-budget').getContext('2d');
 
         var background_1 = bar_budget.createLinearGradient(0, 0, 0, 300);
         background_1.addColorStop(0, '#86D0CB');
@@ -268,16 +324,14 @@ var bar_budget = document.getElementById('wedding-budget').getContext('2d');
         background_2.addColorStop(1, '#DB5D79');
 
         /* data */
-        var data = {
-            labels: ["Clássico", "Moderno", "Rústico"],
+        var dados = {
+            labels: labels,
             datasets: [
                 {
                     /* data */
                     label: "Casamentos",
                     backgroundColor: [background_2, background_1, background_2],
-                    data: [quantidadePorTema[0],
-                           quantidadePorTema[1],
-                           quantidadePorTema[2]]
+                    data: quantidadePorTema
                 }
             ]
         };
@@ -292,6 +346,7 @@ var bar_budget = document.getElementById('wedding-budget').getContext('2d');
                 text: 'Estilos de casamento',
                 display: false
             },
+            maintainAspectRatio: false,
             scales: {
                 xAxes: [
                     {
@@ -317,16 +372,29 @@ var bar_budget = document.getElementById('wedding-budget').getContext('2d');
         };
 
         //Instanciando gráfico
-        var weddingBudget = new Chart(document.getElementById("wedding-budget"), 
-            {
-                type: 'bar',
-                data: data,
-                options: options
-            }
-        );
 
-//--------------Wedding status chart indicator---------------------
-var pie_status = document.getElementById('wedding-status').getContext('2d');
+        if(firstTime) {
+
+            casamentosPage.weddingBudgetChart = new Chart(document.getElementById("wedding-budget"), 
+                {
+                    type: 'bar',
+                    data: dados,
+                    options: options
+                }
+            );
+
+        }else{
+            
+            casamentosPage.weddingBudgetChart.data.labels = dados.labels;
+            casamentosPage.weddingBudgetChart.data.datasets[0].data = dados.datasets[0].data;
+            casamentosPage.weddingBudgetChart.update();
+            
+        }
+    },
+
+    drawPieWeddingStatusChart: function(labels, quantidadePorStatus, firstTime = false) {
+        //--------------Wedding status chart indicator---------------------
+        var pie_status = document.getElementById('wedding-status').getContext('2d');
 
         var background_1 = pie_status.createLinearGradient(0, 0, 0, 300);
         background_1.addColorStop(0, '#86D0CB');
@@ -341,14 +409,14 @@ var pie_status = document.getElementById('wedding-status').getContext('2d');
         background_4.addColorStop(0, '#db5d79');
 
         
-        var data = {
-            labels: ["Criado", "Em pesquisa", "Em agendamento", "Em Pagamento"],
+        var dados = {
+            labels: labels,
             datasets: [
                 {
-                  
+                    
                     label: "Casamentos",
                     backgroundColor: [background_1, background_2, background_3, background_4],
-                    data: [25, 40, 60, 100]
+                    data: quantidadePorStatus
                 }
             ]
         };
@@ -360,6 +428,7 @@ var pie_status = document.getElementById('wedding-status').getContext('2d');
                 position: 'right',
                 align: 'stretch'
             },
+            maintainAspectRatio: false,
             responsive: true,
             title: {
                 text: 'Status dos casamentos',
@@ -368,15 +437,70 @@ var pie_status = document.getElementById('wedding-status').getContext('2d');
         };
 
         //Instanciando gráfico
-        var weddingStatus = new Chart(document.getElementById("wedding-status"), 
+
+        if(firstTime) {
+
+            casamentosPage.weddingStatusChart = new Chart(document.getElementById("wedding-status"), 
             {
                 type: 'doughnut',
-                data: data,
+                data: dados,
                 options: options
             }
         );
+
+        }else{
+            
+            casamentosPage.weddingStatusChart.data.labels = dados.labels;
+            casamentosPage.weddingStatusChart.data.datasets[0].data = dados.datasets[0].data;
+            casamentosPage.weddingStatusChart.update();
+            
+        }
+    },
+
+    handleEvents: function() {
+
+        document.querySelector("#btnYear").addEventListener("click", function(e){
+            e.preventDefault();
+        });
+        
+        document.querySelector("#btnBudget").addEventListener("click", function(e){
+            e.preventDefault();
+        });
+        
+        document.querySelector("#btnStatus").addEventListener("click", function(e){
+            e.preventDefault();
+        });
+
+        $("#btnYear").on("click", function() {
+            casamentosPage.checkFieldsWeddingYearChart();
+        });
+
+        $("#btnBudget").on("click", function(){
+            casamentosPage.checkFieldsBudgetChart();
+        });
+
+        $("#btnStatus").on("click", function() {
+            casamentosPage.checkFieldsStatusChart();
+        });
+
+        $("input, select").on("focus", function() {
+            if($(this).parents("fieldset").hasClass("error")) {
+                $(this).parents("fieldset").removeClass("error");
+            }
+        });
+
+        var budget = document.querySelector('#budget');
+        var value = document.querySelector('span');
+        budget.addEventListener('input', function() {
+            value.textContent = this.value;
+        });
+
+        casamentosPage.callWeddingYear({}, true);
+        casamentosPage.callWeddingBudget({budget:100000}, true);
+        casamentosPage.callWeddingStatus({}, true);
+    }
 }
 
+casamentosPage.init();
 
 
-//}

@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="Css/style.css">
-    <link rel="stylesheet" href="Css/weddings.css"> 
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/x-icon" href="https://home.lejour.com.br/assets/favicon.ico">
     <title>Casamentos</title>
 </head>
 
@@ -16,62 +15,48 @@
 
     <div class="fixed-top menu shadow-sm d-block d-xl-none">
         <nav class="navbar justify-content-end">
-            <img src="Imagens/logo.png" class="mr-auto" alt="">
+            <img src="img/logo.png" class="mr-auto" alt="">
             <button class="navbar-toggler " data-toggle="collapse" data-target="#navbarToggleExternalContent"
                 aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <img src="Imagens/Menu.png" alt="Logo">
+                <img src="img/Menu.png" alt="Logo">
             </button>
         </nav>
         <div class="collapse" id="navbarToggleExternalContent">
             <div class="p-4">
-                <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom">Overview</a>
-                <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ativo">Casamentos</a>
-                <a href="fornecedores.html" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Fornecedores</a>
-                <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Agendamentos</a>
-                <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Usuarios</a>
-                <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Vendas</a>
+                <a href="./index.html" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ativo">Casamentos</a>
+                <a href="./fornecedores.html" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Fornecedores</a>
             </div>
         </div>
     </div>
 
     <aside class="d-none d-xl-block">
         <div class="p-4">
-            <img class="ml-5 my-4" src="Imagens/logo.png" class="mr-auto" alt="">
-            <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom">Overview</a>
-            <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ativo">Casamentos</a>
-            <a href="fornecedores.html" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom">Fornecedores</a>
-            <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Agendamentos</a>
-            <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Usuarios</a>
-            <a href="#" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ">Vendas</a>
+            <img class="ml-5 my-4" src="img/logo.png" class="mr-auto" alt="">
+            <a href="./index.html" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom ativo">Casamentos</a>
+            <a href="./fornecedores.html" class="menu-item mx-0 my-3 pl-3 pb-1 border-bottom">Fornecedores</a>
         </div>
     </aside>
 
-
     <main>
-
         <!--Indicador de estilos de casamento por ano-->
-        <div class="container mt-3" id="span-two">
-            <div class="titulo row justify-content-start">
-                <div class="col-1">
-                    <img src="Imagens/barraMenu.png">
+        <div class="container mt-3 span-two">
+            <div class="titulo">
+                <div class="left-symbol-title">
+                    <img src="img/barraMenu.png">
                 </div>
-                <div>
-                    <p class="col m-0 pl-0">Casamentos durante o ano</p>
+                <div class="box-text-title">
+                    <p>Casamentos durante o ano</p>
                 </div>
             </div>
 
-
             <form method="" action="" class="mb-2 align-items-center">
                 <fieldset>
-                    <legend>Periodo</legend>
+                    <legend>Ano</legend>
                     <select class="ml-3" name="periodo" id = "year-value">
+                        <option value="todos">Todos</option>
                         <option value="2020">2020</option>
                         <option value="2019">2019</option>
                         <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                        <option value="2015">2015</option>
-                        <option value="todos">Todos</option>
                     </select>
                 </fieldset>
 
@@ -79,31 +64,36 @@
 
                 <fieldset>
                     <legend>Estilo</legend>
-                    <select class="ml-3" name="estilo" id="style-value">
+                    <select class="ml-3" name="estilo" id="style-weddings-year">
+                        <option value="todos">Todos</option>
                         <option value="classico">Clássico</option>
                         <option value="moderno">Moderno</option>
                         <option value="rustico">Rústico</option>
                     </select>
                 </fieldset>
 
+                <label class="label-custom">
+                    <input type="checkbox" name="mostrar-sem-data" id="mostrar-sem-data" /> s/ data
+                </label>
+                <br/>
                 <input class="btn btn-filtrar mb-4" type="submit" value="Filtrar" id="btnYear">
-
+                <input class="btn btn-limpar mb-4" type="reset" value="Limpar">
             </form>
 
-            <div class="grafico m-auto" id="span-two">
-                <canvas id="wedding-year" width="600" height="280"></canvas>
+            <div class="grafico m-auto loading span-two" id="weddings-during-year">
+                <canvas id="wedding-year" width="1000" height="600"></canvas>
             </div>
 
         </div>
         <!--Fim indicador de estilos de casamento por ano-->
 
         <!--Indicador de budget -->
-        <div class="container mt-3">
-            <div class="titulo row justify-content-start">
-                <div class="col-1 mr-0 pr-0">
-                    <img class="border m-0" src="Imagens/barraMenu.png">
+        <div class="container mt-3 budget">
+            <div class="titulo">
+                <div class="left-symbol-title">
+                    <img class="border m-0" src="img/barraMenu.png">
                 </div>
-                <div class="col m-0 pl-0">
+                <div class="box-text-title">
                     <p>Casamentos com o budget acima de (R$)</p>
                 </div>
             </div>
@@ -118,26 +108,27 @@
                     <legend>Periodo Final</legend>
                     <input class="ml-3" type="date" name="" id="final-period">
                 </fieldset>
-
-                <input type="range" class="bar" id="budget" min = "35000" max = "250000">
+                <br/>
+                <input type="range" class="bar" id="budget" value="100000" min = "0" max = "1000000">
                 <b>R$</b><span>100000</span>
-
+                <br/>
                 <input class="btn btn-filtrar mb-3" type="submit" value="Filtrar" id="btnBudget">
+                <input class="btn btn-limpar mb-4" type="reset" value="Limpar">
             </form>
 
-            <div class="grafico m-auto">
-                <canvas id="wedding-budget" width="600" height="280"></canvas>
+            <div class="grafico loading" id="budget-chart">
+                <canvas id="wedding-budget" width="290" height="210"></canvas>
             </div>
         </div>
         <!--Fim indicador de budget -->
 
         <!--Indicador de status-->
         <div class="container mt-3">
-            <div class="titulo row justify-content-start">
-                <div class="col-1">
-                    <img src="Imagens/barraMenu.png">
+            <div class="titulo">
+                <div class="left-symbol-title">
+                    <img src="img/barraMenu.png">
                 </div>
-                <div class="col m-0 pl-0">
+                <div class="box-text-title">
                     <p>Status dos casamentos</p>
                 </div>
             </div>
@@ -155,18 +146,20 @@
 
                 <fieldset class="option-fieldset">
                     <legend class="mb-0">Estilo</legend>
-                    <select class="ml-3" name="estilo" id="">
+                    <select class="ml-3" name="estilo" id="style-status">
+                        <option value="todos">Todos</option>
                         <option value="classico">Clássico</option>
                         <option value="moderno">Moderno</option>
                         <option value="rustico">Rústico</option>
                     </select>
                 </fieldset>
-
+                <br/>
                 <input class="btn btn-filtrar mb-4" type="submit" value="Filtrar" id="btnStatus">
+                <input class="btn btn-limpar mb-4" type="reset" value="Limpar">
             </form>
 
-            <div class="grafico m-auto">
-                <canvas id="wedding-status" width="600" height="280"></canvas>
+            <div class="grafico loading" id="status-wedding-chart">
+                <canvas id="wedding-status" width="290" height="210"></canvas>
             </div>
         </div>
         <!--Fim indicador de status-->
@@ -182,8 +175,7 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
 
-    <script src="Js/app.js"></script>
-    <script src="Js/Wedding-page/wedding-charts.js"></script>
+    <script src="js/wedding-page/wedding-charts.js"></script>
 </body>
 
 </html>

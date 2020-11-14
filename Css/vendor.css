@@ -1,0 +1,125 @@
+.grafico {
+    background: #ffffff;
+    box-shadow: 0px 3px 10px rgba(88, 88, 88, 0.1), 0px 16px 31px rgba(88, 88, 88, 0.1);
+    border-radius: 30px;
+    height: 260px;
+    border-radius: 30px;
+    padding: 12px;
+    max-height: 230px;
+    position: relative;
+    max-height: unset;
+}
+
+.box-ranking {
+    height: 100%;
+}
+
+.box-ranking-podium {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.box-item-podium {
+    width: 33.3%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-end;
+    margin-left: 2.5%;
+}
+
+.box-vendor-data {
+    display: flex;
+    flex-direction: column;
+    font-size: 9px;
+}
+
+.box-vendor-bar {
+    width: 90%;
+    margin: 10px 0;
+}
+
+.first .box-vendor-bar {
+    height: 50%;
+    background: rgb(255,184,84);
+    background: linear-gradient(180deg, rgba(255,184,84,1) 0%, rgba(255,163,33,1) 100%);
+}
+
+.seccond .box-vendor-bar {
+    height: 35%;
+    background: rgb(134,208,203);
+    background: linear-gradient(180deg, rgba(134,208,203,1) 0%, rgba(97,194,187,1) 100%);
+}
+
+.third .box-vendor-bar {
+    height: 25%;
+    background: rgb(226,100,90);
+    background: linear-gradient(180deg, rgba(226,100,90,1) 0%, rgba(218,59,47,1) 100%);
+}
+
+.fourty, .fifty {
+    display: none;
+}
+
+.fourty .box-vendor-bar {
+    height: 15%;
+    background: rgb(132,184,226);
+    background: linear-gradient(180deg, rgba(132,184,226,1) 0%, rgba(77,152,213,1) 100%);
+}
+
+.fifty .box-vendor-bar {
+    height: 10%;
+    background: rgb(219,93,121);
+    background: linear-gradient(180deg, rgba(219,93,121,1) 0%, rgba(200,44,79,1) 100%);
+}
+
+.box-ic-vendor-position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-ic-vendor-position img {
+    margin-right: 10%;
+}
+
+.titulo {
+    margin-top: 50px;
+}
+
+@media (min-width: 360px) {
+    .box-vendor-data {
+        font-size: 10px;
+    }
+
+    .grafico {
+        height: 270px;
+    }
+}
+
+@media (min-width: 414px) {
+    .box-vendor-data {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 768px) {
+    .fourty, .fifty {
+        display: flex;
+    }
+
+    .box-item-podium {
+        width: 20%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .titulo {
+        margin-top: 0px;
+    }
+}
+
